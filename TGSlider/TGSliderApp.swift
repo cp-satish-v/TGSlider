@@ -9,9 +9,10 @@ import SwiftUI
 
 @main
 struct TGSliderApp: App {
+    @State var p:Float = 50
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(percentage: $p)
         }
     }
 }
