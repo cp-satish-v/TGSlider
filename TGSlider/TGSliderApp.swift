@@ -9,10 +9,14 @@ import SwiftUI
 
 @main
 struct TGSliderApp: App {
-    @State var p:Float = 50
+    
+    @State var p: Float = 50
+    
     var body: some Scene {
         WindowGroup {
-            TGSlider(percentage: $p)
+            TGSlider(percentage: $p, progressText: { progress in
+                String(Int(ceil(progress))) + "°"
+            })
         }
     }
 }
