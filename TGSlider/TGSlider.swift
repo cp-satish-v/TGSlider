@@ -15,8 +15,8 @@ public struct TGSlider: View {
     @State var segmentHeight: CGFloat = 35
     @State var smallSegmentHeight: CGFloat = 0.5
     @State var totalSegment: Int = 10
-    @State var progressType: String = "°"
     @State var fontSize: CGFloat = 15
+    let progressText: (Float) -> (String)
 
     public var body: some View {
         GeometryReader { geometry in
@@ -37,7 +37,7 @@ public struct TGSlider: View {
                     .frame(height: 3)
                     .cornerRadius(7.5)
                 
-                Text("\(Int(ceil(self.percentage)))\(progressType)")
+                Text(progressText(percentage))
                     .font(.system(size: fontSize))
                     .frame(alignment: .center)
                     .padding(.bottom, 60)
@@ -50,7 +50,7 @@ public struct TGSlider: View {
                     .cornerRadius(4)
                     .offset(CGSize(width: (geometry.size.width - segmentWidth) * CGFloat(self.percentage / 100), height: 0))
             }
-            .padding([.top, .bottom], /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
+            .padding([.top, .bottom], 10)
             .gesture(DragGesture(minimumDistance: 0)
                 .onChanged({ value in
                     // TODO: - maybe use other logic here
@@ -64,6 +64,8 @@ struct ContentView_Previews: PreviewProvider {
     @State static var p: Float = 50
     
     static var previews: some View {
-        TGSlider(percentage: $p)
+        TGSlider(percentage: $p, progressText: { progress in
+            String(Int(ceil(progress))) + "°"
+        })
     }
 }
