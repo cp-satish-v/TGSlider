@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		423D8F3525D827C500133DDB /* TGSliderApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423D8F3425D827C500133DDB /* TGSliderApp.swift */; };
-		423D8F3725D827C500133DDB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423D8F3625D827C500133DDB /* ContentView.swift */; };
+		423D8F3725D827C500133DDB /* TGSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423D8F3625D827C500133DDB /* TGSlider.swift */; };
 		423D8F3925D827C500133DDB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 423D8F3825D827C500133DDB /* Assets.xcassets */; };
 		423D8F3C25D827C500133DDB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 423D8F3B25D827C500133DDB /* Preview Assets.xcassets */; };
 /* End PBXBuildFile section */
@@ -16,7 +16,7 @@
 /* Begin PBXFileReference section */
 		423D8F3125D827C500133DDB /* TGSlider.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TGSlider.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		423D8F3425D827C500133DDB /* TGSliderApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TGSliderApp.swift; sourceTree = "<group>"; };
-		423D8F3625D827C500133DDB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		423D8F3625D827C500133DDB /* TGSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TGSlider.swift; sourceTree = "<group>"; };
 		423D8F3825D827C500133DDB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		423D8F3B25D827C500133DDB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		423D8F3D25D827C500133DDB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -53,7 +53,7 @@
 			isa = PBXGroup;
 			children = (
 				423D8F3425D827C500133DDB /* TGSliderApp.swift */,
-				423D8F3625D827C500133DDB /* ContentView.swift */,
+				423D8F3625D827C500133DDB /* TGSlider.swift */,
 				423D8F3825D827C500133DDB /* Assets.xcassets */,
 				423D8F3D25D827C500133DDB /* Info.plist */,
 				423D8F3A25D827C500133DDB /* Preview Content */,
@@ -138,7 +138,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				423D8F3725D827C500133DDB /* ContentView.swift in Sources */,
+				423D8F3725D827C500133DDB /* TGSlider.swift in Sources */,
 				423D8F3525D827C500133DDB /* TGSliderApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
