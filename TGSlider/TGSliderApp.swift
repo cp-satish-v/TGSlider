@@ -12,7 +12,9 @@ struct TGSliderApp: App {
     @State var p:Float = 50
     var body: some Scene {
         WindowGroup {
-            ContentView(percentage: $p)
+            ContentView(percentage: $p, progressText: { progress in
+                String(Int(ceil(progress))) + "°"
+            })
         }
     }
 }
