@@ -6,8 +6,9 @@
 //
 
 import SwiftUI
+import UIKit
 
-struct ContentView: View {
+public struct TGSlider: View {
     
     @Binding var percentage: Float // or some value binded
     @State var segmentWidth: CGFloat = 3
@@ -17,7 +18,7 @@ struct ContentView: View {
     @State var progressType: String = "°"
     @State var fontSize: CGFloat = 15
 
-    var body: some View {
+    public var body: some View {
         GeometryReader { geometry in
             // TODO: - there might be a need for horizontal and vertical alignments
             ZStack(alignment: .leading) {
@@ -63,6 +64,6 @@ struct ContentView_Previews: PreviewProvider {
     @State static var p: Float = 50
     
     static var previews: some View {
-        ContentView(percentage: $p)
+        TGSlider(percentage: $p)
     }
 }
