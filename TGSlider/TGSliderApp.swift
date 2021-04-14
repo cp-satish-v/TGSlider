@@ -14,9 +14,9 @@ struct TGSliderApp: App {
     
     var body: some Scene {
         WindowGroup {
-            TGSlider(percentage: $p, progressText: { progress in
+            TGSlider(progress: $p) { progress in
                 String(Int(ceil(progress))) + "°"
-            })
+            }
         }
     }
 }

@@ -11,22 +11,38 @@ import UIKit
 public struct TGSlider: View {
     
     @Binding var percentage: Float // or some value binded
-    @State var segmentWidth: CGFloat = 3
-    @State var segmentHeight: CGFloat = 35
-    @State var smallSegmentHeight: CGFloat = 0.5
-    @State var totalSegment: Int = 10
-    @State var fontSize: CGFloat = 15
+    let segmentWidth: CGFloat
+    let segmentHeight: CGFloat
+    let smallSegmentScaler: CGFloat
+    let totalSegment: Int
+    let fontSize: CGFloat
     let progressText: (Float) -> (String)
+    
+    public init(progress: Binding<Float>,
+         segmentWidth:CGFloat = 3,
+         segmentHeight: CGFloat = 35,
+         smallSegmentScaler: CGFloat = 0.5,
+         totalSegment: Int = 10,
+         overlayFontSize: CGFloat = 15,
+         overlayTextProvider: @escaping (Float) -> (String)) {
+        self._percentage = progress
+        self.segmentWidth = segmentWidth
+        self.segmentHeight = segmentHeight
+        self.smallSegmentScaler = smallSegmentScaler
+        self.totalSegment = totalSegment
+        self.fontSize = overlayFontSize
+        self.progressText = overlayTextProvider
+    }
 
     public var body: some View {
         GeometryReader { geometry in
             // TODO: - there might be a need for horizontal and vertical alignments
             ZStack(alignment: .leading) {
                 HStack(alignment: .center) {
-                    ForEach(Range<Int>(0...totalSegment - 1)) { _ in
+                    ForEach(Range<Int>(1...totalSegment)) { _ in
                         Spacer(minLength: 3)
                         Rectangle()
-                            .frame(width: segmentWidth, height: min(segmentHeight * smallSegmentHeight, geometry.size.height))
+                            .frame(width: segmentWidth, height: min(segmentHeight * smallSegmentScaler, geometry.size.height))
                             .foregroundColor(.gray)
                             .cornerRadius(4)
                         Spacer(minLength: 3)
@@ -64,8 +80,8 @@ struct ContentView_Previews: PreviewProvider {
     @State static var p: Float = 50
     
     static var previews: some View {
-        TGSlider(percentage: $p, progressText: { progress in
+        TGSlider(progress: $p) { (progress) -> (String) in
             String(Int(ceil(progress))) + "°"
-        })
+        }
     }
 }
