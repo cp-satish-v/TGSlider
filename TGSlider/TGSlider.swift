@@ -16,6 +16,8 @@ public struct TGSlider: View {
     let smallSegmentScaler: CGFloat
     let totalSegment: Int
     let fontSize: CGFloat
+    let minValue: Float
+    let maxValue: Float
     let progressText: (Float) -> (String)
     
     public init(progress: Binding<Float>,
@@ -24,6 +26,8 @@ public struct TGSlider: View {
          smallSegmentScaler: CGFloat = 0.5,
          totalSegment: Int = 10,
          overlayFontSize: CGFloat = 15,
+         minValue: Float = 0,
+         maxValue: Float = 100,
          overlayTextProvider: @escaping (Float) -> (String)) {
         self._percentage = progress
         self.segmentWidth = segmentWidth
@@ -31,6 +35,8 @@ public struct TGSlider: View {
         self.smallSegmentScaler = smallSegmentScaler
         self.totalSegment = totalSegment
         self.fontSize = overlayFontSize
+        self.minValue = minValue
+        self.maxValue = maxValue
         self.progressText = overlayTextProvider
     }
 
@@ -53,27 +59,40 @@ public struct TGSlider: View {
                     .frame(height: 3)
                     .cornerRadius(7.5)
                 
+                let _percentage = percentage.ilerp(min: minValue, max: maxValue) * 100
+                
                 Text(progressText(percentage))
                     .font(.system(size: fontSize))
-                    .frame(alignment: .center)
-                    .padding(.bottom, 60)
-                    .padding(.leading, -6)
-                    .offset(CGSize(width: max(min(((geometry.size.width - segmentWidth) * CGFloat(self.percentage / 100)), geometry.size.width - 26), 6), height: 0))
+                    .position(x: (geometry.size.width - segmentWidth) * CGFloat(_percentage / 100), y: 0)
                 
                 Rectangle()
                     .frame(width:segmentWidth, height: min(segmentHeight, geometry.size.height))
                     .foregroundColor(.accentColor)
                     .cornerRadius(4)
-                    .offset(CGSize(width: (geometry.size.width - segmentWidth) * CGFloat(self.percentage / 100), height: 0))
+                    .offset(CGSize(width: (geometry.size.width - segmentWidth) * CGFloat(_percentage / 100), height: 0))
             }
             .padding([.top, .bottom], 10)
             .gesture(DragGesture(minimumDistance: 0)
-                .onChanged({ value in
-                    // TODO: - maybe use other logic here
-                    self.percentage = min(max(0, Float(value.location.x / geometry.size.width * 100)), 100)
-                }))
-        }.frame(height: 80)
+                        .onChanged({ value in
+                            // TODO: - maybe use other logic here
+                            let result = min(max(0, Float(value.location.x / geometry.size.width)), 1)
+                            self.percentage  = Float(result).lerp(min: minValue, max: maxValue)
+                        }))
+        }
+        .frame(height: 80)
     }
+}
+
+extension Float {
+  /// Linear interpolation
+  public func lerp(min: Float, max: Float) -> Float {
+    return min + (self * (max - min))
+  }
+    
+  /// Inverse linear interpolation
+  public func ilerp(min: Float, max: Float) -> Float {
+    return (self - min) / (max - min)
+  }
 }
 
 struct ContentView_Previews: PreviewProvider {
@@ -81,7 +100,7 @@ struct ContentView_Previews: PreviewProvider {
     
     static var previews: some View {
         TGSlider(progress: $p) { (progress) -> (String) in
-            String(Int(ceil(progress))) + "°"
+            String(Int(progress)) + "°"
         }
     }
 }
