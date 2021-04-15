@@ -8,6 +8,16 @@
 import SwiftUI
 import UIKit
 
+public struct Theme {
+    public let thumbColor: Color
+    public let leaderColor: Color
+    public let textColor: Color
+    
+    public static func `default`() -> Theme {
+        .init(thumbColor: .accentColor, leaderColor: .gray, textColor: .black)
+    }
+}
+
 public struct TGSlider: View {
     
     @Binding var percentage: Float // or some value binded
@@ -19,15 +29,17 @@ public struct TGSlider: View {
     let minValue: Float
     let maxValue: Float
     let progressText: (Float) -> (String)
+    let theme: Theme
     
     public init(progress: Binding<Float>,
-         segmentWidth:CGFloat = 3,
+         segmentWidth: CGFloat = 3,
          segmentHeight: CGFloat = 35,
          smallSegmentScaler: CGFloat = 0.5,
          totalSegment: Int = 10,
          overlayFontSize: CGFloat = 15,
          minValue: Float = 0,
          maxValue: Float = 100,
+         theme: Theme = .default(),
          overlayTextProvider: @escaping (Float) -> (String)) {
         self._percentage = progress
         self.segmentWidth = segmentWidth
@@ -37,6 +49,7 @@ public struct TGSlider: View {
         self.fontSize = overlayFontSize
         self.minValue = minValue
         self.maxValue = maxValue
+        self.theme = theme
         self.progressText = overlayTextProvider
     }
 
@@ -49,13 +62,13 @@ public struct TGSlider: View {
                         Spacer(minLength: 3)
                         Rectangle()
                             .frame(width: segmentWidth, height: min(segmentHeight * smallSegmentScaler, geometry.size.height))
-                            .foregroundColor(.gray)
+                            .foregroundColor(theme.leaderColor)
                             .cornerRadius(4)
                         Spacer(minLength: 3)
                     }
                 }
                 Rectangle()
-                    .foregroundColor(.gray)
+                    .foregroundColor(theme.leaderColor)
                     .frame(height: 3)
                     .cornerRadius(7.5)
                 
@@ -63,11 +76,12 @@ public struct TGSlider: View {
                 
                 Text(progressText(percentage))
                     .font(.system(size: fontSize))
+                    .foregroundColor(theme.textColor)
                     .position(x: (geometry.size.width - segmentWidth) * CGFloat(_percentage / 100), y: 0)
                 
                 Rectangle()
                     .frame(width:segmentWidth, height: min(segmentHeight, geometry.size.height))
-                    .foregroundColor(.accentColor)
+                    .foregroundColor(theme.thumbColor)
                     .cornerRadius(4)
                     .offset(CGSize(width: (geometry.size.width - segmentWidth) * CGFloat(_percentage / 100), height: 0))
             }
