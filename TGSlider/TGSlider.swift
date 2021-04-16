@@ -10,11 +10,11 @@ import UIKit
 
 public struct Theme {
     public let thumbColor: Color
-    public let leaderColor: Color
+    public let ladderColor: Color
     public let textColor: Color
     
     public static func `default`() -> Theme {
-        .init(thumbColor: .accentColor, leaderColor: .gray, textColor: .black)
+        .init(thumbColor: .accentColor, ladderColor: .gray, textColor: .black)
     }
 }
 
@@ -62,13 +62,13 @@ public struct TGSlider: View {
                         Spacer(minLength: 3)
                         Rectangle()
                             .frame(width: segmentWidth, height: min(segmentHeight * smallSegmentScaler, geometry.size.height))
-                            .foregroundColor(theme.leaderColor)
+                            .foregroundColor(theme.ladderColor)
                             .cornerRadius(4)
                         Spacer(minLength: 3)
                     }
                 }
                 Rectangle()
-                    .foregroundColor(theme.leaderColor)
+                    .foregroundColor(theme.ladderColor)
                     .frame(height: 3)
                     .cornerRadius(7.5)
                 
