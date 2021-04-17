@@ -18,9 +18,17 @@ public struct Theme {
     }
 }
 
+public class SliderDataModel: ObservableObject {
+    @Published public var value: Float
+    
+    init(value: Float) {
+        self.value = value
+    }
+}
+
 public struct TGSlider: View {
     
-    @Binding var percentage: Float // or some value binded
+    @ObservedObject var data: SliderDataModel // or some value binded
     let segmentWidth: CGFloat
     let segmentHeight: CGFloat
     let smallSegmentScaler: CGFloat
@@ -31,7 +39,7 @@ public struct TGSlider: View {
     let progressText: (Float) -> (String)
     let theme: Theme
     
-    public init(progress: Binding<Float>,
+    public init(data: SliderDataModel,
          segmentWidth: CGFloat = 3,
          segmentHeight: CGFloat = 35,
          smallSegmentScaler: CGFloat = 0.5,
@@ -41,7 +49,7 @@ public struct TGSlider: View {
          maxValue: Float = 100,
          theme: Theme = .default(),
          overlayTextProvider: @escaping (Float) -> (String)) {
-        self._percentage = progress
+        self.data = data
         self.segmentWidth = segmentWidth
         self.segmentHeight = segmentHeight
         self.smallSegmentScaler = smallSegmentScaler
@@ -72,9 +80,9 @@ public struct TGSlider: View {
                     .frame(height: 3)
                     .cornerRadius(7.5)
                 
-                let _percentage = percentage.ilerp(min: minValue, max: maxValue) * 100
+                let _percentage = data.value.ilerp(min: minValue, max: maxValue) * 100
                 
-                Text(progressText(percentage))
+                Text(progressText(data.value))
                     .font(.system(size: fontSize))
                     .foregroundColor(theme.textColor)
                     .position(x: (geometry.size.width - segmentWidth) * CGFloat(_percentage / 100), y: 0)
@@ -90,7 +98,7 @@ public struct TGSlider: View {
                         .onChanged({ value in
                             // TODO: - maybe use other logic here
                             let result = min(max(0, Float(value.location.x / geometry.size.width)), 1)
-                            self.percentage  = Float(result).lerp(min: minValue, max: maxValue)
+                            self.data.value  = Float(result).lerp(min: minValue, max: maxValue)
                         }))
         }
         .frame(height: 80)
@@ -113,7 +121,7 @@ struct ContentView_Previews: PreviewProvider {
     @State static var p: Float = 50
     
     static var previews: some View {
-        TGSlider(progress: $p) { (progress) -> (String) in
+        TGSlider(data: .init(value: p)) { (progress) -> (String) in
             String(Int(progress)) + "°"
         }
     }
