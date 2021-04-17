@@ -21,7 +21,7 @@ public struct Theme {
 public class SliderDataModel: ObservableObject {
     @Published public var value: Float
     
-    init(value: Float) {
+    public init(value: Float) {
         self.value = value
     }
 }
