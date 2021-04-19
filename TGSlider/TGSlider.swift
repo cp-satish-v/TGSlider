@@ -9,9 +9,16 @@ import SwiftUI
 import UIKit
 
 public struct Theme {
+    
     public let thumbColor: Color
     public let ladderColor: Color
     public let textColor: Color
+    
+    public init(thumbColor: Color, ladderColor: Color, textColor: Color) {
+        self.thumbColor = thumbColor
+        self.ladderColor = ladderColor
+        self.textColor = textColor
+    }
     
     public static func `default`() -> Theme {
         .init(thumbColor: .accentColor, ladderColor: .gray, textColor: .black)
